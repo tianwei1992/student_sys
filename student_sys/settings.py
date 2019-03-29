@@ -25,12 +25,13 @@ SECRET_KEY = 'fu+)=($(otn+(tmet()6qe-0qfhp6v+re=p)d%@d=1pbq4=6p5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'student',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
