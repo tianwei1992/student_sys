@@ -13,7 +13,7 @@ class Student(models.Model):
         (1, '通过'),
         (2, '拒绝')
     ]
-
+    # 一共8个个字段，其中前6个是个人细腻，最后2个是状态相关
     name = models.CharField(max_length=128, verbose_name='姓名')
     sex = models.IntegerField(choices=SEX_ITEMS, verbose_name='性别')
     profession = models.CharField(max_length=128, verbose_name='职业')
@@ -28,4 +28,4 @@ class Student(models.Model):
         return '<Student: {}>'.format(self.name)
 
     class Meta:
-        verbose_name = verbose_name_plural = '学员信息'
+        verbose_name = verbose_name_plural = '学员信息'  # 定义字段在后台显示的名称
