@@ -6,7 +6,14 @@
     </head>
 
     <body>
-      你好啊 {{ words }}!
+        <ul>
+      {%  for student in students %}
+            <li>{{ student.name }} - {{ student.get_status_display }}</li>
+      {%  endfor %}
+       <!-- get_status_display不是Student的方法，而是因为其status字段带有choices属性，自带这样的方法 -->
+
+
+        </ul>
 
     </body>
 
