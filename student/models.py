@@ -27,5 +27,10 @@ class Student(models.Model):
     def __str__(self):
         return '<Student: {}>'.format(self.name)
 
+    @classmethod
+    def get_all(cls):
+        # 把数据过程封装成model本身提供的方法，方便后续改动
+        return cls.objects.all()
+
     class Meta:
         verbose_name = verbose_name_plural = '学员信息'  # 定义字段在后台显示的名称
