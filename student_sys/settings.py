@@ -55,7 +55,7 @@ ROOT_URLCONF = 'student_sys.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates"),],   # 指定模板的ROOT DIR，否则仅凭名字是找不到的
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
