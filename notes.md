@@ -1,4 +1,4 @@
-# Chapter 3 第一个例子
+# Chapter3 第一个例子
 ## 使用Class-based view
 + View可以是方法，也可以是一个类，如IndexView.as_view()。
 + 1个函数-》1个类+多个方法：在IndexView中定义def get()和def post()以及公用的get_context()，代码变多但实际上get和post功能分开，更清晰。
@@ -41,8 +41,9 @@
     self.assertEqual()
     self.assertTrue()
     ```
-# Chapter  编码规范
+# Chapter4 编码规范
 ## Python规范（pep8）
+参考：[google Python规范](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/#indentation)
 1. 缩进
     1. 垂直对齐
         ```python
@@ -101,3 +102,75 @@
     improt os
     import sys
     ```
+## Django编码规范
+参考：[Django官方编码规范](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/)
+1. 引用顺序
+    ```python
+    # future
+    from __future__ import unicode_literals
+    
+    # standard library
+    import json
+    from itertools import chain
+    
+    # third-party
+    import bcrypt
+    
+    # Django
+    from django.http import Http404
+    from django.http.response import (
+        Http404, HttpResponse, HttpResponseNotAllowed, StreamingHttpResponse,
+        cookie,
+    )
+    
+    # local Django
+    from .models import LogEntry
+    
+    # try/except
+    try:
+        import yaml
+    except ImportError:
+        yaml = None
+    
+    CONSTANT = 'foo'
+    
+    
+    class Example:
+        # ...
+    ```
+2. Model中的规范
+    + 注意空格、小写下划线命名、字段之后再class Meta的顺序:
+    ```python
+    class Person(models.Model):
+       first_name = models.CharField(max_length=20)
+       last_name = models.CharField(max_length=40)
+
+       class Meta:
+           verbose_name_plural = 'people'
+    ```
+    + 应当遵循的顺序:
+    ```python
+    All database fields
+    Custom manager attributes
+    class Meta
+    def __str__()
+    def save()
+    def get_absolute_url()
+    Any custom methods
+    ```
+3. 使用更方便的引用，如：
+    ```from django.views import View```
+    而不是
+    ```from django.views.generic.base import View```
+    。
+    
+    （django.views是一个文件夹，__init__.py中引入了django.views.generic.base:
+    ```python
+    from django.views.generic.base import View
+
+    __all__ = ['View']
+    ```
+     参考:[](https://github.com/django/django/blob/master/django/views/__init__.py)
+ 4. Django Settings相关
+ + [Django Settings官方](https://docs.djangoproject.com/en/2.1/topics/settings/)
+ + [编码风格](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/)
