@@ -171,6 +171,71 @@
     __all__ = ['View']
     ```
      参考:[](https://github.com/django/django/blob/master/django/views/__init__.py)
- 4. Django Settings相关
- + [Django Settings官方](https://docs.djangoproject.com/en/2.1/topics/settings/)
- + [编码风格](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/)
+4. Django Settings相关
+    + [Django Settings官方](https://docs.djangoproject.com/en/2.1/topics/settings/)
+    + [编码风格](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/)
+    1. 为了指定用哪个settings文件 -》指定环境变量DJANGO_SETTINGS_MODULE的值为mysite.settings
+        ```python
+        import os   
+        os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
+        ```
+        或者
+        ```python
+        export DJANGO_SETTINGS_MODULE=mysite.settings
+        django-admin runserver
+    
+        ```
+        用python manage.py是自动帮你找到settings，不用显式指定
+    
+    2. 如果没有显式指定，则用默认的 global_settings.py；否则先加载 global_settings.py，再按指定修改。
+        查看有哪些修改 -》 python manage.py diffsettings
+    3. 在app里面，如果需要读取settings的值来判断状态：
+        ```python
+           from django.conf import settings
+
+           if settings.DEBUG:
+                # Do something
+        ```
+    4. DJANGO_SETTINGS_MODULE 和 django.conf.settings.configure()二选一
+    5. 使用单独的文件，必须有django.setup()
+        ```python
+        import django
+        from django.conf import settings
+        from myapp import myapp_defaults
+        
+        settings.configure(default_settings=myapp_defaults, DEBUG=True)
+        django.setup()
+        
+        # Now this script or any imported module can use any part of Django it needs.
+        from myapp import models
+                ```
+    
+    6. 仅引入还不行，要settings.configure()才生效。
+        ```python
+        from django.conf import settings
+        settings.configure({}, SOME_SETTING='foo')
+        ```
+ ## 项目结构与拆分
+ 1. 项目名称和源码名称一致
+ 2. 一个通用python项目结构：
+    + LICENSE
+    + MANIFEST.in
+    + README.md
+    + conf/
+    + fabfile/
+    + others/
+    + requirements.txt
+    + setup.py
+    + src/
+ 3. 一个Django项目也应该拆分，settings、urls拆分、views都要拆分……
+    如settings.py拆分为一个文件夹settings，包含：
+    + __init__.py
+    + base.py
+    + develop.py
+    + product.py
+    
+    随后修改manage.py和wsgi.py文件
+ ## Git协作
+1. ~/.gitconfig & .git/config
+2. git rebase -i HEAD~3   
+ 
